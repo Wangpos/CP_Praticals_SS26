@@ -1,26 +1,38 @@
 # CP Practicals Analysis
 
-## Problem 1 — Dynamic Array Basics 
+## Problem 1 — Array Statistics (Maximum, Minimum, and Sum)
 
 ### Problem Summary
 
-In this problem, I had to read N integers and find the largest and smallest values among them. The goal was to do this efficiently without using sorting.
+This program accepts N integers from user input and computes 3 basic statistics: the **maximum number**, the **minimum number**, and the **summation** of all the numbers. These tasks represent basic operations on an array of information and demonstrate the use of fundamental vector functions in C++.
 
 ### Algorithm Explanation
 
-I started by taking the first number as both the maximum and minimum. Then I went through the remaining numbers one by one. If a number was larger than the current maximum, I updated the maximum. If it was smaller than the current minimum, I updated the minimum. At the end, I printed both values.
+1. **Input Reading:** The program first reads n (the number of elements).
+2. **Array Population & Sum Calculation:** It iterates through n iterations, reading each integer into the vector arr and simultaneously accumulating the sum using a long long variable to avoid overflow.
+3. **Finding Maximum:** Uses the STL max_element() function to find the largest element and dereferences the iterator to print its value.
+4. **Finding Minimum:** Uses the STL min_element() function to find the smallest element and dereferences the iterator to print its value.
+5. **Output:** The three values are printed on separate lines: maximum, minimum, and sum.
+
+![problem1](Screenshots/problem1_output.png)
 
 ### Time Complexity
 
-**O(N)** because I only traverse the list once.
+**O(N)** A single traversal of the array is required to access each number in it to determine the cumulative sum of all the reference values or maximum and minimum values in the array `(both max_element() / min_element() perform at O(N)`.
 
 ### Space Complexity
 
-**O(N)** for storing the input values, while the extra working space is only constant.
+**O(N)** for storing the input array in the vector. The additional variables (`sum`, iterators) require only constant space.
+
+### Key Observations
+
+- **Use of `long long` for Sum**: Using `long long` instead of `int` prevents overflow when dealing with large values or large array sizes.
+- **STL Algorithms**: The code leverages C++ Standard Library functions (`max_element`, `min_element`) which are optimized and reliable.
+- **Iterator Dereferencing**: The `*` operator dereferences the iterator returned by `max_element()` and `min_element()` to access the actual value.
 
 ### Reflection
 
-This problem reminded me that a simple one-pass solution is often better than sorting. I also understood that initializing min and max with the first element is safer, especially when negative numbers are involved.
+This problem demonstrates the importance of using appropriate data types and built-in algorithms. Rather than implementing manual max/min search logic, using STL functions ensures correctness and readability. The single-pass approach for sum calculation is efficient and minimizes memory access overhead.
 
 ---
 
@@ -33,6 +45,8 @@ Here, I was given N integers and needed to print them in reverse order. The main
 ### Algorithm Explanation
 
 I stored all the numbers in a vector. After that, I used a loop starting from the last index and moved back to the first index. During this reverse traversal, I printed each element in order.
+
+![problem2](Screenshots/problem2_output.png)
 
 ### Time Complexity
 
@@ -58,6 +72,8 @@ In this problem, I had to remove repeated elements from a list of integers and p
 
 First, I stored all the numbers in a vector. Then I sorted the vector so that any duplicate values would come next to each other. After sorting, I used `unique()` to shift the duplicates to the end and then removed them using `erase()`. Finally, I printed the remaining values.
 
+![problem3](Screenshots/problem3_output.png)
+
 ### Time Complexity
 
 **O(N log N)** because sorting takes the most time, while removing duplicates afterward is linear.
@@ -81,6 +97,8 @@ In this question, I needed to find the maximum element in every window of size K
 ### Algorithm Explanation
 
 I used a deque to store indices of useful elements. While moving through the array, I removed indices that were outside the current window. Then I removed smaller elements from the back of the deque because they could never become the maximum while a larger element was present. The front of the deque always stored the index of the maximum element for the current window.
+
+![problem4](Screenshots/problem4_output.png)
 
 ### Time Complexity
 
@@ -106,6 +124,8 @@ This problem simulated a line where people could enter or leave from both the fr
 
 I used a deque because it supports insertion and deletion from both ends efficiently. For `push_front` and `push_back`, I added the given value to the appropriate side. For `pop_front` and `pop_back`, I removed an element only if the deque was not empty. After each operation, I printed all current elements in order.
 
+![problem5](Screenshots/problem5_output.png)
+
 ### Time Complexity
 
 **O(Q × N)** in the worst case, because each operation on the deque is fast, but printing the whole line after every step may take up to O(N).
@@ -129,6 +149,8 @@ In this problem, I had to find and print the K largest numbers from a list of N 
 ### Algorithm Explanation
 
 I used a `priority_queue`, which works as a max heap in C++. I inserted all the numbers into the heap. Then I removed the top element K times. Since the top of a max heap is always the largest value, this directly gave me the K largest numbers in order.
+
+![problem6](Screenshots/problem6_output.png)
 
 ### Time Complexity
 
@@ -154,6 +176,8 @@ This problem required printing the median after each new number was added to the
 
 I used two heaps. One max heap stored the smaller half of the numbers, and one min heap stored the larger half. After inserting a new value into the correct heap, I rebalanced them so that their sizes stayed nearly equal. If both heaps had the same size, the median was the average of the two top values. Otherwise, the median was the top of the larger heap.
 
+![problem7](Screenshots/problem7_output.png)
+
 ### Time Complexity
 
 **O(N log N)** because each insertion and balancing step takes O(log N), and this happens for every input value.
@@ -177,6 +201,8 @@ In this question, I had to generate all possible subsets of a given set of numbe
 ### Algorithm Explanation
 
 I used the bitmask technique. I looped from 0 to $2^N - 1$, and each number in that range represented one subset. For every bit position, if the bit was set, I included that element in the subset. If it was not set, I skipped it. This gave all subsets in a systematic way.
+
+![problem8](Screenshots/problem8_output.png)
 
 ### Time Complexity
 
@@ -202,6 +228,8 @@ This problem asked me to count how many subsets of the given numbers have an eve
 
 I again used bitmasking to generate every possible subset. For each subset, I added the values of the selected elements. After calculating the sum, I checked whether it was even. If it was, I increased the count. At the end, I printed the final count.
 
+![problem9](Screenshots/problem9_output.png)
+
 ### Time Complexity
 
 **O(2^N × N)** because I generate all subsets and compute the sum of elements in each one.
@@ -225,6 +253,8 @@ In this problem, I had to count how many subsets add up to a given target value.
 ### Algorithm Explanation
 
 I defined `dp[i][j]` as the number of ways to make sum `j` using the first `i` elements. For each element, there were two choices: either include it or exclude it. So the value of each state came from previous results. If the current element was not greater than the target sum I was building, I added both possibilities together.
+
+![problem10](Screenshots/problem10_output.png)
 
 ### Time Complexity
 
