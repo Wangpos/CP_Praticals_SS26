@@ -1,6 +1,6 @@
 # CP Practicals Analysis
 
-## Problem 1 — Find Maximum & Minimum
+## Problem 1 — Dynamic Array Basics 
 
 ### Problem Summary
 
